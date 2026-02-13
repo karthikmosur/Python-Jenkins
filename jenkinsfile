@@ -1,20 +1,14 @@
 pipeline {
   agent { label 'ec2' }
 
-  triggers {
-    pollSCM('H/2 * * * *')  // every 2 minutes
-  }
-
   stages {
-    stage('Checkout') {
+    stage('EC2 Agent Test') {
       steps {
-        checkout scm
-      }
-    }
-
-    stage('Run Python') {
-      steps {
-        sh 'python3 app.py'
+        sh '''
+          whoami
+          hostname
+          docker run hello-world
+        '''
       }
     }
   }
